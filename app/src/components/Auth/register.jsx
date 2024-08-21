@@ -48,15 +48,18 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post("/api/auth/register", {
-        username,
-        email,
-        password,
-        role, // Include the fixed role in the registration data
-      });
+      const response = await axios.post(
+        "http://localhost:8000/user/createUser",
+        {
+          username,
+          email,
+          password,
+          role, // Include the fixed role in the registration data
+        }
+      );
 
       // Assuming successful registration redirects to login page
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       if (error.response && error.response.data) {
         setErrors({

@@ -17,12 +17,8 @@ export const createUserValidation = {
     isString: { errorMessage: "Password must be string" },
     notEmpty: { errorMessage: "Password must not be empty" },
   },
-  businessName: {
-    isString: { errorMessage: "business name must be string" },
-    notEmpty: { errorMessage: "business name must not be empty" },
-  },
-  address: {
-    isString: { errorMessage: "address must be string" },
-    notEmpty: { errorMessage: "address must not be empty" },
+  role: {
+    isString: { errorMessage: "role name must be string" },
+    notEmpty: { errorMessage: "role name must not be empty" },
   },
 };

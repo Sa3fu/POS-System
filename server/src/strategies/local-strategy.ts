@@ -19,19 +19,16 @@ passport.deserializeUser(async (id: number, done) => {
 });
 
 export default passport.use(
-  new Strategy(
-    { usernameField: "email" },
-    async (email: string, password: string, done) => {
-      try {
-        const findUser = await Users.findOne({ where: { email } });
-        if (!findUser) throw new Error("Incorrect email");
-        if (!comparePassword(password, findUser.password))
-          throw new Error("Incorrect Password");
-        done(null, findUser);
-      } catch (error) {
-        console.error("passport Error", error);
-        done(error, null);
-      }
+  new Strategy(async (username: string, password: string, done) => {
+    try {
+      const findUser = await Users.findOne({ where: { username } });
+      if (!findUser) throw new Error("Incorrect email");
+      if (!comparePassword(password, findUser.password))
+        throw new Error("Incorrect Password");
+      done(null, findUser);
+    } catch (error) {
+      console.error("passport Error", error);
+      done(error, null);
     }
-  )
+  })
 );

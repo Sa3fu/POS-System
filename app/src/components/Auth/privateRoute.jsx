@@ -1,23 +1,15 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-// A higher order component to protect routes
-const privateRoute = ({ component: Component, ...rest }) => {
-  const isAuthenticated = !!localStorage.getItem("token");
-  const userRole = localStorage.getItem("role");
-
-  return (
-    <Route
-      {...rest}
-      render={(props) => {
-        isAuthenticated ? (
-          <Component {...props} role={userRole} />
-        ) : (
-          <Redirect to="login" />
-        );
-      }}
-    />
-  );
+// Helper function to check if the user is authenticated
+const isAuthenticated = () => {
+  const token = localStorage.getItem("token");
+  // Check if the token exists and is valid (you might want to verify the token's expiry date, etc.)
+  return token ? true : false;
 };
 
-export default privateRoute;
+const PrivateRoute = ({ element: Element, ...rest }) => {
+  return isAuthenticated() ? <Element {...rest} /> : <Navigate to="/" />;
+};
+
+export default PrivateRoute;

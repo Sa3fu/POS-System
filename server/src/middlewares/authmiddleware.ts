@@ -4,6 +4,12 @@ import connectSessionSequelize from "connect-session-sequelize";
 import sequelize from "../config/sessionStore.js";
 import { Handler } from "express";
 
+declare module "express-session" {
+  interface SessionData {
+    token?: string;
+    role?: string;
+  }
+}
 // Set up the session store
 const sequelizeStore = connectSessionSequelize(session.Store);
 
@@ -25,7 +31,7 @@ export default function (app: { use: (arg0: Handler) => void }) {
       secret: "Saifu@123)(",
       saveUninitialized: false,
       resave: false,
-      cookie: { maxAge: 60000 * 6 },
+      cookie: { maxAge: 24 * 60 * 60 * 1000 }, //one day
       store: store,
     })
   );
