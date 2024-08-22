@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import AppDataSource from "./config/db.js";
 import router from "./routes/index.js";
-import setupAuthMiddleware from "./middlewares/authmiddleware.js";
+import passport from "passport";
 
 dotenv.config();
 
@@ -12,7 +12,7 @@ const app = express();
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 
-setupAuthMiddleware(app);
+app.use(passport.initialize());
 
 app.use(router);
 

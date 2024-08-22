@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/2529134-ai-brush-removebg-qli96r7.png";
@@ -8,6 +8,20 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (role && token) {
+      //If token and role are found, redirect based on role
+      if (role === "admin") {
+        navigate("/admin");
+      } else if (role === "cashier") {
+        navigate("/cashier");
+      }
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();

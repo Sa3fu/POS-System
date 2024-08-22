@@ -22,13 +22,16 @@ export default passport.use(
   new Strategy(async (username: string, password: string, done) => {
     try {
       const findUser = await Users.findOne({ where: { username } });
-      if (!findUser) throw new Error("Incorrect email");
-      if (!comparePassword(password, findUser.password))
-        throw new Error("Incorrect Password");
-      done(null, findUser);
+      if (!findUser) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      if (!comparePassword(password, findUser.password)) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+      return done(null, findUser);
     } catch (error) {
       console.error("passport Error", error);
-      done(error, null);
+      return done(error);
     }
   })
 );
