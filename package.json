@@ -1,0 +1,20 @@
+{
+  "name": "pos_system",
+  "version": "1.0.0",
+  "scripts": {
+    "api": "npm run start -w api",
+    "app": "npm run start -w app",
+    "clean": "sh ./clean.sh"
+  },
+  "workspaces": [
+    "api",
+    "app"
+  ],
+  "dependencies": {
+    "workspaces": "^0.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.1",
+    "typescript": "^5.4.5"
+  }
+}
