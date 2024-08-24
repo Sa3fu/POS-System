@@ -1,8 +1,8 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import AppDataSource from './config/db.js'
-import router from './routes/index.js'
+import AppDataSource from './server/db.js'
+import router from './common/routes/index.js'
 import passport from 'passport'
 
 dotenv.config()
