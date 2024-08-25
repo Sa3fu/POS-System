@@ -11,10 +11,12 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
     try {
       const user = verifyToken(token)
       console.log('Token verified, user:', user)
+
       req.user = user // Assign the user to req.user
       next()
     } catch (err) {
       console.error('Token verification error:', err)
+
       return res.status(403).json({ error: 'Forbidden' })
     }
   } else {
