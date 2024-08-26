@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { matchedData, validationResult } from 'express-validator'
 import { Category } from '../../models/entity/category.entity.js'
 
+// create category and save POST
 export const createCategory = async (req: Request, res: Response) => {
   const result = validationResult(req)
 
@@ -25,5 +26,29 @@ export const createCategory = async (req: Request, res: Response) => {
       message: 'Error in creating category',
       error: error.message,
     })
+  }
+}
+
+// Get all the category from table GET
+export const getCategory = async (req: Request, res: Response) => {
+  try {
+    const categories = await Category.find()
+    return res.status(200).send({ categories })
+  } catch (error) {
+    return res.status(500).send({ message: 'Internal Server Error' })
+  }
+}
+
+//Get the category from table with id
+export const getCategoryById = async (req: Request, res: Response) => {
+  const { id } = req.params
+  try {
+    const category = await Category.findOneBy({ id: parseInt(id) })
+    if (!category) {
+      return res.status(400).send({ message: 'Category not found' })
+    }
+    return res.status(200).send(category)
+  } catch (error) {
+    return res.status(500).send({ message: 'Internal Server Error' })
   }
 }
