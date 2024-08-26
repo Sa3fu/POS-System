@@ -52,3 +52,25 @@ export const getCategoryById = async (req: Request, res: Response) => {
     return res.status(500).send({ message: 'Internal Server Error' })
   }
 }
+
+//To update the category from table
+export const updateCategory = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const { name } = req.body
+
+  try {
+    const category = await Category.findOneBy({ id: parseInt(id) })
+
+    if (!category) {
+      return res.status(400).send({ message: 'Category not found' })
+    }
+
+    if (name) category.name = name
+
+    await category.save()
+
+    return res.status(200).send(category)
+  } catch (error) {
+    return res.status(500).send({ message: 'Internal Server Error' })
+  }
+}
