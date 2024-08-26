@@ -1,15 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, JoinColumn } from 'typeorm'
+import { Category } from './category.entity.js'
 
 @Entity({ name: 'products' })
 export class Products extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({
-    type: 'varchar',
-    nullable: false,
+  @JoinColumn({
+    name: 'category_id',
   })
-  name: string
+  category: Category
 
   @Column({
     type: 'varchar',
@@ -28,17 +28,20 @@ export class Products extends BaseEntity {
     nullable: false,
   })
   price: number
+
   @Column({
     type: 'varchar',
     nullable: false,
     unique: true,
   })
   sku: string
+
   @Column({
     type: 'boolean',
     nullable: false,
   })
   isAvailable: boolean
+
   @Column({
     type: 'varchar',
     nullable: false,

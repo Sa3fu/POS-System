@@ -1,32 +1,38 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm'
 
-@Entity({ name: "users" })
+@Entity({ name: 'users' })
 export class Users extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column({
-    type: "varchar",
+    type: 'varchar',
     nullable: false,
   })
-  username: string;
+  username: string
 
   @Column({
-    type: "varchar",
+    type: 'varchar',
     nullable: false,
     unique: true,
   })
-  email: string;
+  email: string
 
   @Column({
-    type: "varchar",
+    type: 'varchar',
     nullable: false,
   })
-  password: string;
+  password: string
 
   @Column({
-    type: "varchar",
+    type: 'varchar',
     nullable: false,
   })
-  role: string;
+  role: string
+
+  @Column({
+    type: 'boolean',
+    nullable: false,
+  })
+  isDelete: boolean
 }

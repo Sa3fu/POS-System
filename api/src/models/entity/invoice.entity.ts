@@ -22,13 +22,13 @@ export class Invoice extends BaseEntity {
     type: 'int',
     nullable: false,
   })
-  customerId: number
+  customer_Id: number
 
   @Column({
     type: 'int',
     nullable: false,
   })
-  userId: number
+  user_Id: number
 
   @Column({
     type: 'date',

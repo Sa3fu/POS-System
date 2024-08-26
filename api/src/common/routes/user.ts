@@ -1,8 +1,8 @@
-import { Router, Request, Response } from 'express'
+import { Router } from 'express'
 import { checkSchema } from 'express-validator'
 import { createUserValidation } from '../utils/validationSchema.js'
 import '../strategies/local-strategy.js'
-import { createUser } from '../../modules/user/create.js'
+import { createUser } from '../../modules/user/user.js'
 import { authenticateUser, checkAuthStatus } from '../../modules/user/authenticateUser.js'
 import { authenticateJWT } from '../../middlewares/authenticateJwt.js'
 
