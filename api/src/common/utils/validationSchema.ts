@@ -31,3 +31,31 @@ export const createCategoryValidation = {
     isString: { errorMessage: 'Category name should be a string' },
   },
 }
+
+//Validation to create product
+export const createProductValidation = {
+  brand: {
+    isString: { errorMessage: 'Brand should be string' },
+    notEmpty: { errorMessage: 'Brand should not be empty' },
+  },
+  model: {
+    isString: { errorMessage: 'Model should be string' },
+    notEmpty: { errorMessage: 'Model should not be empty' },
+  },
+  price: {
+    isString: { errorMessage: 'price should be number' },
+    notEmpty: { errorMessage: 'Price should not be empty' },
+  },
+  sku: {
+    isString: { errorMessage: 'sku should be string' },
+    notEmpty: { errorMessage: 'sku should not be empty' },
+  },
+  barcode: {
+    isString: { errorMessage: 'Barcode should be string' },
+    notEmpty: { errorMessage: 'Barcode should not be empty' },
+  },
+  categoryId: {
+    isNumeric: { errorMessage: 'Category id should be Number' },
+    notEmpty: { errorMessage: 'Category id should not be empty' },
+  },
+}

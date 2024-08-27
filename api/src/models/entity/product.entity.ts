@@ -1,15 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, JoinColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, JoinColumn, ManyToOne } from 'typeorm'
 import { Category } from './category.entity.js'
 
 @Entity({ name: 'products' })
 export class Products extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
-
-  @JoinColumn({
-    name: 'category_id',
-  })
-  category: Category
 
   @Column({
     type: 'varchar',
@@ -48,4 +43,8 @@ export class Products extends BaseEntity {
     unique: true,
   })
   barcode: string
+
+  @ManyToOne(() => Category, (category) => category.products, { nullable: false, lazy: true })
+  @JoinColumn({ name: 'categoryId' }) // Foreign key column
+  category: Promise<Category>
 }

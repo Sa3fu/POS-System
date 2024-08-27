@@ -13,7 +13,7 @@ export const createCategory = async (req: Request, res: Response) => {
 
   const data = matchedData(req)
 
-  const newCategory = Category.create(data)
+  const newCategory = Category.create({ ...data, isDelete: false })
 
   try {
     const saveCategory = await newCategory.save()
@@ -32,7 +32,7 @@ export const createCategory = async (req: Request, res: Response) => {
 // Get all the category from table GET
 export const getCategory = async (req: Request, res: Response) => {
   try {
-    const categories = await Category.find()
+    const categories = await Category.find({ where: { isDelete: false } })
     return res.status(200).send({ categories })
   } catch (error) {
     return res.status(500).send({ message: 'Internal Server Error' })
@@ -66,10 +66,29 @@ export const updateCategory = async (req: Request, res: Response) => {
     }
 
     if (name) category.name = name
+    category.isDelete = false
 
     await category.save()
 
     return res.status(200).send(category)
+  } catch (error) {
+    return res.status(500).send({ message: 'Internal Server Error' })
+  }
+}
+
+//To delete a item from table
+export const deleteCategory = async (req: Request, res: Response) => {
+  const { id } = req.params
+  try {
+    const category = await Category.findOneBy({ id: parseInt(id) })
+    if (!category) {
+      return res.status(400).send({ message: 'Category not found' })
+    }
+    category.isDelete = true
+
+    await category.save()
+
+    return res.status(201).send({ message: 'Category deleted successfully' })
   } catch (error) {
     return res.status(500).send({ message: 'Internal Server Error' })
   }
