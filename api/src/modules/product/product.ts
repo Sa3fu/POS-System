@@ -44,3 +44,34 @@ export const createProduct = async (req: Request, res: Response) => {
     })
   }
 }
+//get all Product GET
+export const getAllProduct = async (req: Request, res: Response) => {
+  try {
+    const products = await Products.find({
+      where: { isAvailable: false },
+      relations: ['category'],
+      select: { category: { name: true } },
+    })
+    return res.status(200).send({ products })
+  } catch (error) {
+    return res.status(500).send({ message: 'Internal Server Error' })
+  }
+}
+
+//get product by ID GET
+export const getProductById = async (req: Request, res: Response) => {
+  const { id } = req.params
+  try {
+    const product = await Products.findOne({
+      where: { id: parseInt(id) },
+      relations: ['category'],
+      select: { category: { name: true } },
+    })
+    if (!product) {
+      return res.status(400).send({ message: 'Product not found' })
+    }
+    return res.status(200).send(product)
+  } catch (error) {
+    return res.status(500).send({ message: 'Internal Server Error' })
+  }
+}
