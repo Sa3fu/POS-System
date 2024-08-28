@@ -5,6 +5,7 @@ import {
   createProduct,
   deleteProduct,
   getAllProduct,
+  getProductByCategory,
   getProductById,
   recoverProduct,
   searchProduct,
@@ -14,11 +15,12 @@ import {
 const router = Router()
 
 router.post('/create', checkSchema(createProductValidation), createProduct)
+router.post('/update/:id', updateProduct)
+router.post('/delete/:id', deleteProduct)
+router.post('/recover/:id', recoverProduct)
 router.get('/getAll', getAllProduct)
 router.get('/search', searchProduct)
 router.get('/:id', getProductById)
-router.patch('/update/:id', updateProduct)
-router.patch('/delete/:id', deleteProduct)
-router.patch('/recover/:id', recoverProduct)
+router.get('/category/:categoryId', getProductByCategory)
 
 export default router

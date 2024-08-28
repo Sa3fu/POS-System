@@ -76,6 +76,90 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 }
 
+//Search product GET
+export const searchProduct = async (req: Request, res: Response) => {
+  try {
+    const { brand, model, price, sku } = req.query
+
+    let queryBuilder = Products.createQueryBuilder('product')
+      .leftJoinAndSelect('product.category', 'category')
+      .where('1=1') // This allows us to always have a WHERE clause to start with
+
+    if (brand) {
+      queryBuilder = queryBuilder.andWhere('LOWER(product.brand) LIKE LOWER(:brand)', {
+        brand: `%${brand}%`,
+      })
+    }
+
+    if (model) {
+      queryBuilder = queryBuilder.andWhere('LOWER(product.model) LIKE LOWER(:model)', {
+        model: `%${model}%`,
+      })
+    }
+
+    if (price) {
+      const parsedPrice = parseFloat(price as string)
+      if (!isNaN(parsedPrice)) {
+        queryBuilder = queryBuilder.andWhere('product.price = :price', { price: parsedPrice })
+      } else {
+        return res.status(400).json({ message: 'Invalid price value' })
+      }
+    }
+
+    if (sku) {
+      queryBuilder = queryBuilder.andWhere('LOWER(product.sku) LIKE LOWER(:sku)', {
+        sku: `%${sku}%`,
+      })
+    }
+
+    const products = await queryBuilder.getMany()
+
+    if (products.length === 0) {
+      return res.status(404).json({ message: 'No products found matching the criteria' })
+    }
+
+    return res.status(200).json(products)
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Internal Server Error',
+    })
+  }
+}
+
+//Get products by category GET
+export const getProductByCategory = async (req: Request, res: Response) => {
+  try {
+    const { categoryId } = req.params
+
+    if (!categoryId) {
+      return res.status(400).json({ message: 'Category ID is required' })
+    }
+
+    // Check if category exists
+    const category = await Category.findOne({
+      where: { id: parseInt(categoryId), isDelete: false },
+    })
+
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found' })
+    }
+
+    // Fetch products by category
+    const products = await Products.find({
+      where: { category: { id: category.id }, isAvailable: false },
+      relations: ['category'],
+    })
+
+    // If no products found
+    if (products.length === 0) {
+      return res.status(404).json({ message: 'No products found for this category' })
+    }
+    return res.status(200).json({ products, count: products.length })
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal Server Error', error: error.message })
+  }
+}
+
 //Update product PATCH
 export const updateProduct = async (req: Request, res: Response) => {
   const { id } = req.params
@@ -143,55 +227,5 @@ export const recoverProduct = async (req: Request, res: Response) => {
     return res.status(201).send({ message: 'Product Recovered successfully' })
   } catch (error) {
     return res.status(500).send({ message: 'Internal Server Error' })
-  }
-}
-
-//Search product GET
-export const searchProduct = async (req: Request, res: Response) => {
-  try {
-    const { brand, model, price, sku } = req.query
-
-    let queryBuilder = Products.createQueryBuilder('product')
-      .leftJoinAndSelect('product.category', 'category')
-      .where('1=1') // This allows us to always have a WHERE clause to start with
-
-    if (brand) {
-      queryBuilder = queryBuilder.andWhere('LOWER(product.brand) LIKE LOWER(:brand)', {
-        brand: `%${brand}%`,
-      })
-    }
-
-    if (model) {
-      queryBuilder = queryBuilder.andWhere('LOWER(product.model) LIKE LOWER(:model)', {
-        model: `%${model}%`,
-      })
-    }
-
-    if (price) {
-      const parsedPrice = parseFloat(price as string)
-      if (!isNaN(parsedPrice)) {
-        queryBuilder = queryBuilder.andWhere('product.price = :price', { price: parsedPrice })
-      } else {
-        return res.status(400).json({ message: 'Invalid price value' })
-      }
-    }
-
-    if (sku) {
-      queryBuilder = queryBuilder.andWhere('LOWER(product.sku) LIKE LOWER(:sku)', {
-        sku: `%${sku}%`,
-      })
-    }
-
-    const products = await queryBuilder.getMany()
-
-    if (products.length === 0) {
-      return res.status(404).json({ message: 'No products found matching the criteria' })
-    }
-
-    return res.status(200).json(products)
-  } catch (error) {
-    return res.status(500).json({
-      message: 'Internal Server Error',
-    })
   }
 }

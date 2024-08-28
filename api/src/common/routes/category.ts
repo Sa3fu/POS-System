@@ -12,9 +12,9 @@ import {
 const router = Router()
 
 router.post('/create', checkSchema(createCategoryValidation), createCategory)
+router.post('/update/:id', updateCategory)
+router.post('/delete/:id', deleteCategory)
 router.get('/getAll', getCategory)
 router.get('/get/:id', getCategoryById)
-router.patch('/update/:id', updateCategory)
-router.patch('/delete/:id', deleteCategory)
 
 export default router
