@@ -11,6 +11,7 @@
     "app"
   ],
   "dependencies": {
+    "joi": "^17.13.3",
     "workspaces": "^0.1.0"
   },
   "devDependencies": {

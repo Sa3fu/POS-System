@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from 'typeorm'
+import { Products } from './product.entity.js'
 
 @Entity({ name: 'inventory' })
 export class Inventory extends BaseEntity {
@@ -9,13 +10,7 @@ export class Inventory extends BaseEntity {
     type: 'int',
     nullable: false,
   })
-  productId: number // Foreign Key to Products table
-
-  @Column({
-    type: 'int',
-    nullable: false,
-  })
-  stockQuantity: number
+  quantity: number
 
   @Column({
     type: 'timestamp',
@@ -37,4 +32,14 @@ export class Inventory extends BaseEntity {
     onUpdate: 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date
+
+  @ManyToOne(
+    () => Products,
+    (products) => {
+      products.inventory
+    },
+    { nullable: false }
+  )
+  @JoinColumn({ name: 'productId' })
+  product: Promise<Products>
 }

@@ -1,5 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, JoinColumn, ManyToOne } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm'
 import { Category } from './category.entity.js'
+import { Inventory } from './inventory.entity.js'
 
 @Entity({ name: 'products' })
 export class Products extends BaseEntity {
@@ -34,8 +43,23 @@ export class Products extends BaseEntity {
   @Column({
     type: 'boolean',
     nullable: false,
+    default: false,
   })
   isAvailable: boolean
+
+  @Column({
+    type: 'boolean',
+    nullable: false,
+    default: false,
+  })
+  isEnabled: boolean
+
+  @Column({
+    type: 'boolean',
+    nullable: false,
+    default: false,
+  })
+  isDeleted: boolean
 
   @Column({
     type: 'varchar',
@@ -47,4 +71,12 @@ export class Products extends BaseEntity {
   @ManyToOne(() => Category, (category) => category.products, { nullable: false, lazy: true })
   @JoinColumn({ name: 'categoryId' }) // Foreign key column
   category: Promise<Category>
+
+  @OneToMany(
+    () => Inventory,
+    (inventory) => {
+      inventory.product
+    }
+  )
+  inventory: Inventory[]
 }
