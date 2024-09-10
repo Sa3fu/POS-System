@@ -1,24 +1,20 @@
 import { Request, Response } from 'express'
 import { Products } from '../../models/entity/product.entity.js'
+import {
+  getAllProductsWithSumQuantity,
+  getProductByIdWithSumQuantity,
+} from '../../common/repositories/productRepository.js'
 
 export const detail = async (req: Request, res: Response) => {
   try {
     const { id } = req.body
 
     if (id) {
-      const data = await Products.find({
-        where: {
-          id: parseInt(id),
-          isDeleted: false,
-        },
-      })
+      const data = await getProductByIdWithSumQuantity(parseInt(id))
       return res.status(201).send({ data })
     } else {
-      const data = await Products.find({
-        where: {
-          isDeleted: false,
-        },
-      })
+      const data = await getAllProductsWithSumQuantity()
+
       return res.status(201).send({ success: true, data })
     }
   } catch (error) {

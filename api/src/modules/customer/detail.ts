@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { Customer } from '../../models/entity/customer.entity'
+import { Customer } from '../../models/entity/customer.entity.js'
 
 export const detail = async (req: Request, res: Response) => {
   try {

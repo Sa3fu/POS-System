@@ -45,13 +45,6 @@ export class Products extends BaseEntity {
     nullable: false,
     default: false,
   })
-  isAvailable: boolean
-
-  @Column({
-    type: 'boolean',
-    nullable: false,
-    default: false,
-  })
   isEnabled: boolean
 
   @Column({
@@ -68,15 +61,11 @@ export class Products extends BaseEntity {
   })
   barcode: string
 
-  @ManyToOne(() => Category, (category) => category.products, { nullable: false, lazy: true })
-  @JoinColumn({ name: 'categoryId' }) // Foreign key column
+  @ManyToOne(() => Category, (category) => category.products, { nullable: false })
+  @JoinColumn({ name: 'categoryId' })
   category: Promise<Category>
 
-  @OneToMany(
-    () => Inventory,
-    (inventory) => {
-      inventory.product
-    }
-  )
+  @OneToMany(() => Inventory, (inventory) => inventory.product)
+  @JoinColumn()
   inventory: Inventory[]
 }

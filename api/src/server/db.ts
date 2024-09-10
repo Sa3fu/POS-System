@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 import { DB_HOST, DB_NAME, DB_PASSWORD, DB_USER } from '../common/config/env.js'
 
-const AppDataSource = new DataSource({
+export const AppDataSource = new DataSource({
   type: 'mysql',
   host: DB_HOST || 'localhost',
   port: 3306,

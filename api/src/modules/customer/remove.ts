@@ -1,6 +1,4 @@
 import { Request, Response } from 'express'
-import Joi from 'joi'
-import { validate } from '../../common/utils/_validate.js'
 import { Customer } from '../../models/entity/customer.entity.js'
 
 //Update product PATCH

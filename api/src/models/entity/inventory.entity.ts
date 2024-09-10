@@ -1,22 +1,37 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from 'typeorm'
 import { Products } from './product.entity.js'
+import { SaleProduct } from './saleProducts.entity.js'
 
 @Entity({ name: 'inventory' })
 export class Inventory extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
+  @ManyToOne(
+    () => Products,
+    (products) => {
+      products.inventory
+    },
+    { nullable: true }
+  )
+  @JoinColumn({ name: 'productId' })
+  product: Promise<Products>
+
+  @ManyToOne(
+    () => SaleProduct,
+    (sale) => {
+      sale.inventories
+    },
+    { nullable: true }
+  )
+  @JoinColumn({ name: 'saleId' })
+  saleProduct: Promise<SaleProduct>
+
   @Column({
     type: 'int',
     nullable: false,
   })
   quantity: number
-
-  @Column({
-    type: 'timestamp',
-    nullable: false,
-  })
-  lastRestocked: Date
 
   @Column({
     type: 'timestamp',
@@ -32,14 +47,4 @@ export class Inventory extends BaseEntity {
     onUpdate: 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date
-
-  @ManyToOne(
-    () => Products,
-    (products) => {
-      products.inventory
-    },
-    { nullable: false }
-  )
-  @JoinColumn({ name: 'productId' })
-  product: Promise<Products>
 }

@@ -1,9 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm'
+import { Inventory } from './inventory.entity'
 
 @Entity({ name: 'sale_products' })
 export class SaleProduct extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
+
+  @OneToMany(() => Inventory, (inventory) => inventory.saleProduct)
+  inventories: Inventory[]
 
   @Column({
     type: 'int',
