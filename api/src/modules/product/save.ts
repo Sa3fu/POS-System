@@ -23,7 +23,7 @@ export const save = async (req: Request, res: Response) => {
     })
   )
 
-  const { id, quantity, categoryId, ...fields } = req.body
+  const { id, categoryId, ...fields } = req.body
 
   let product
   try {
@@ -41,7 +41,7 @@ export const save = async (req: Request, res: Response) => {
 
       const inventory = Inventory.create({
         product: product,
-        quantity: quantity,
+        ...fields,
       })
 
       await inventory.save()

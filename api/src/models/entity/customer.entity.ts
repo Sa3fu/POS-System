@@ -1,9 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm'
+import { Sales } from './sales.entity.js'
 
 @Entity({ name: 'customers' })
 export class Customer extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
+
+  @OneToMany(() => Sales, (sales) => sales.customer)
+  sales: Sales[]
 
   @Column({
     type: 'varchar',

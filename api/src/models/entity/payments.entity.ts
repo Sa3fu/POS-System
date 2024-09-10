@@ -1,15 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne } from 'typeorm'
+import { Sales } from './sales.entity.js'
 
 @Entity({ name: 'payments' })
 export class Payment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({
-    type: 'int',
-    nullable: false,
-  })
-  saleId: number
+  @OneToOne(() => Sales, (sale) => sale.payment)
+  sale: Promise<Sales>
 
   @Column({
     type: 'varchar',
@@ -24,10 +22,10 @@ export class Payment extends BaseEntity {
   amountPaid: number
 
   @Column({
-    type: 'varchar',
-    nullable: false,
+    type: 'decimal',
+    nullable: true,
   })
-  status: string // e.g., 'paid', 'unpaid', 'refunded'
+  discount: number
 
   @Column({
     type: 'timestamp',

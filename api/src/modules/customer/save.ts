@@ -15,8 +15,7 @@ export const save = async (req: Request, res: Response) => {
     })
   )
 
-  const { id } = req.body
-  const fields = req.body
+  const { id, ...fields } = req.body
 
   let customer
   try {

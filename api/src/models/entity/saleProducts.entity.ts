@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm'
-import { Inventory } from './inventory.entity'
+import { Inventory } from './inventory.entity.js'
 
 @Entity({ name: 'sale_products' })
 export class SaleProduct extends BaseEntity {
