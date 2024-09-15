@@ -1,5 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm'
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm'
 import { Inventory } from './inventory.entity.js'
+import { Sales } from './sales.entity.js'
+import { Products } from './product.entity.js'
 
 @Entity({ name: 'sale_products' })
 export class SaleProduct extends BaseEntity {
@@ -9,17 +19,12 @@ export class SaleProduct extends BaseEntity {
   @OneToMany(() => Inventory, (inventory) => inventory.saleProduct)
   inventories: Inventory[]
 
-  @Column({
-    type: 'int',
-    nullable: false,
-  })
-  saleId: number
+  @ManyToOne(() => Sales, (sales) => sales.saleProducts)
+  @JoinColumn({ name: 'salesId' })
+  sale: Promise<Sales>
 
-  @Column({
-    type: 'int',
-    nullable: false,
-  })
-  productId: number
+  @ManyToOne(() => Products, (products) => products.saleProduct)
+  product: Promise<Products>
 
   @Column({
     type: 'int',

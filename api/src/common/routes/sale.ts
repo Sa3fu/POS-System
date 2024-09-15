@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { save } from '../../modules/inventory/save.js'
-import { detail } from '../../modules/inventory/detail.js'
+import { save } from '../../modules/sale/save.js'
+import { detail } from '../../modules/sale/detail.js'
 
 const router = Router()
 

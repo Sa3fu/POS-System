@@ -6,9 +6,12 @@ import {
   OneToOne,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm'
 import { Payment } from './payments.entity.js'
 import { Customer } from './customer.entity.js'
+import { Users } from './user.entity.js'
+import { SaleProduct } from './saleProducts.entity.js'
 @Entity({ name: 'sales' })
 export class Sales extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -22,11 +25,12 @@ export class Sales extends BaseEntity {
   @JoinColumn({ name: 'customerId' })
   customer: Promise<Customer>
 
-  @Column({
-    type: 'int',
-    nullable: false,
-  })
-  user_Id: number
+  @ManyToOne(() => Users, { nullable: false })
+  @JoinColumn({ name: 'userId' })
+  user: Promise<Users>
+
+  @OneToMany(() => SaleProduct, (saleProduct) => saleProduct.sale)
+  saleProducts: SaleProduct[]
 
   @Column({
     type: 'timestamp',

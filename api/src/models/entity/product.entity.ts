@@ -9,6 +9,7 @@ import {
 } from 'typeorm'
 import { Category } from './category.entity.js'
 import { Inventory } from './inventory.entity.js'
+import { SaleProduct } from './saleProducts.entity.js'
 
 @Entity({ name: 'products' })
 export class Products extends BaseEntity {
@@ -68,4 +69,7 @@ export class Products extends BaseEntity {
   @OneToMany(() => Inventory, (inventory) => inventory.product)
   @JoinColumn()
   inventory: Inventory[]
+
+  @OneToMany(() => SaleProduct, (saleProduct) => saleProduct.product)
+  saleProduct: SaleProduct[]
 }

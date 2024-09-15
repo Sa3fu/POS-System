@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import { Products } from '../../models/entity/product.entity.js'
 import {
   getAllProductsWithSumQuantity,
   getProductByIdWithSumQuantity,

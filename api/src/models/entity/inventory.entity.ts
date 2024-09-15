@@ -24,7 +24,6 @@ export class Inventory extends BaseEntity {
     },
     { nullable: true }
   )
-  @JoinColumn({ name: 'saleId' })
   saleProduct: Promise<SaleProduct>
 
   @Column({
