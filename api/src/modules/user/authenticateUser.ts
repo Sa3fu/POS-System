@@ -24,6 +24,7 @@ export const authenticateUser = (req: Request, res: Response, next: NextFunction
       message: 'Login successful',
       token,
       role: user.role,
+      userId: user.id,
     })
   })(req, res, next)
 }

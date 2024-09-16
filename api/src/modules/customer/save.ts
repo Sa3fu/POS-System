@@ -9,8 +9,8 @@ export const save = async (req: Request, res: Response) => {
     req,
     res,
     Joi.object({
-      name: Joi.string().required().pattern(phoneNumberPattern),
-      phoneNumber: Joi.string().required(),
+      name: Joi.string().required(),
+      phoneNumber: Joi.string().required().pattern(phoneNumberPattern),
       email: Joi.string().email().optional(),
     })
   )

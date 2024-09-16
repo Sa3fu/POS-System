@@ -37,6 +37,7 @@ export class Users extends BaseEntity {
   @Column({
     type: 'boolean',
     nullable: false,
+    default: false,
   })
   isDelete: boolean
 }

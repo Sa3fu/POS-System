@@ -1,17 +1,15 @@
 import { Router } from 'express'
-import { checkSchema } from 'express-validator'
-import { createUserValidation } from '../utils/validationSchema.js'
 import '../strategies/local-strategy.js'
-import { createUser } from '../../modules/user/user.js'
-import { authenticateUser, checkAuthStatus } from '../../modules/user/authenticateUser.js'
-import { authenticateJWT } from '../../middlewares/authenticateJwt.js'
+import { authenticateUser } from '../../modules/user/authenticateUser.js'
+import { save } from '../../modules/user/save.js'
+import { remove } from '../../modules/user/remove.js'
+import { detail } from '../../modules/user/detail.js'
 
 const router = Router()
 
-router.post('/createUser', checkSchema(createUserValidation), createUser)
-
+router.post('/save', save)
 router.post('/auth', authenticateUser)
-
-router.get('/auth/status', authenticateJWT, checkAuthStatus)
+router.post('/remove', remove)
+router.get('/detail', detail)
 
 export default router

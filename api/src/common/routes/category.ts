@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import { checkSchema } from 'express-validator'
 import { save } from '../../modules/category/save.js'
 import { remove } from '../../modules/category/remove.js'
 import { detail } from '../../modules/category/detail.js'
