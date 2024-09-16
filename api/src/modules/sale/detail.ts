@@ -17,13 +17,13 @@ export const detail = async (req: Request, res: Response) => {
         'saleProduct.priceAtSale',
         'sale.id',
         'payment.paymentMethod',
-        'payment.amountPaid',
         'payment.paymentDate',
         'customer.name',
         'customer.phoneNumber',
         'user.username',
       ])
-      .getMany()
+      .groupBy('sale.id, saleProduct.id')
+      .getRawMany()
 
     return res.status(200).send({ success: true, data: data })
   } catch (error) {
