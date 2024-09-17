@@ -1,15 +1,24 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+import React from 'react'
+import { Navigate } from 'react-router-dom'
 
-// Helper function to check if the user is authenticated
-const isAuthenticated = () => {
-  const token = localStorage.getItem("token");
-  // Check if the token exists and is valid (you might want to verify the token's expiry date, etc.)
-  return token ? true : false;
-};
+// Helper function to check if the user is authenticated and has a required role
+const isAuthenticated = (requiredRole) => {
+  const token = localStorage.getItem('token')
+  const userRole = localStorage.getItem('role') // Get the role from localStorage
 
-const PrivateRoute = ({ element: Element, ...rest }) => {
-  return isAuthenticated() ? <Element {...rest} /> : <Navigate to="/" />;
-};
+  if (!token) return false // If no token, the user is not authenticated
 
-export default PrivateRoute;
+  if (requiredRole && requiredRole !== userRole) {
+    // If a role is required and doesn't match the user's role, deny access
+    return false
+  }
+
+  return true // User is authenticated and has the required role (if any)
+}
+
+const PrivateRoute = ({ element: Element, role, ...rest }) => {
+  // If the user is authenticated and has the required role, render the component
+  return isAuthenticated(role) ? <Element {...rest} /> : <Navigate to='/' />
+}
+
+export default PrivateRoute

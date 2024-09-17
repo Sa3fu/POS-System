@@ -25,6 +25,7 @@ export const authenticateUser = (req: Request, res: Response, next: NextFunction
       token,
       role: user.role,
       userId: user.id,
+      username: user.username,
     })
   })(req, res, next)
 }
