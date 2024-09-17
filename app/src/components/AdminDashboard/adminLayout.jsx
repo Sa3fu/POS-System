@@ -35,38 +35,42 @@ const AdminLayout = ({ children }) => {
           </div>
           <ul className='space-y-4'>
             <li>
-              <Link to='/admin/dashboard' className='hover:text-gray-400'>
+              <Link to='/admin' className='hover:text-gray-400'>
                 Dashboard
               </Link>
             </li>
-            <li>
-              <Link to='/admin/products' className='hover:text-gray-400'>
-                Product Management
-              </Link>
-            </li>
-            <li>
-              <Link to='/admin/users' className='hover:text-gray-400'>
-                User Management
-              </Link>
-            </li>
-            <li>
-              <Link to='/admin/sales' className='hover:text-gray-400'>
-                Sales Reports
-              </Link>
-            </li>
-            <li>
-              <Link to='/admin/settings' className='hover:text-gray-400'>
-                System Settings
-              </Link>
-            </li>
-
+            <SidebarItem
+              title='Product Management'
+              links={[
+                { label: 'Create Product', path: '/admin/product/create' },
+                { label: 'Product Detail', path: '/admin/product/detail' },
+              ]}
+            />
             {/* Inventory with Submenu */}
             <li>
               <SidebarItem
-                title='Inventory'
+                title='Inventory Management'
                 links={[
                   { label: 'Create Inventory', path: '/admin/inventory/create' },
                   { label: 'Inventory Details', path: '/admin/inventory/detail' },
+                ]}
+              />
+            </li>
+            <li>
+              <SidebarItem
+                title='User Management'
+                links={[
+                  { label: 'Create User', path: '/admin/user/create' },
+                  { label: 'User Details', path: '/admin/user/detail' },
+                ]}
+              />
+            </li>
+            <li>
+              <SidebarItem
+                title='Customer Management'
+                links={[
+                  { label: 'Create Customer', path: '/admin/customer/create' },
+                  { label: 'Customer Details', path: '/admin/customer/detail' },
                 ]}
               />
             </li>

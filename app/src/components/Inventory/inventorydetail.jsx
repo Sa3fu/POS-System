@@ -57,11 +57,12 @@ const InventoryDetail = () => {
     <AdminLayout>
       <div>
         <h2 className='flex text-2xl font-bold justify-center top-2 mb-10'>Inventory Details</h2>
-        <table className='min-w-full border-collapse border border-gray-400'>
+        <table className='min-w-full border-collapse border border-gray-400 items-center flex-col'>
           <thead>
             <tr>
               <th className='border border-gray-300 p-2'>Brand</th>
               <th className='border border-gray-300 p-2'>Model</th>
+              <th className='border border-gray-300 p-2'>SKU</th>
               <th className='border border-gray-300 p-2'>Category</th>
               <th className='border border-gray-300 p-2'>Quantity</th>
             </tr>
@@ -80,6 +81,7 @@ const InventoryDetail = () => {
               >
                 <td className='border border-gray-300 p-2'>{item.product_brand}</td>
                 <td className='border border-gray-300 p-2'>{item.product_model}</td>
+                <td className='border border-gray-300 p-2'>{item.product_sku}</td>
                 <td className='border border-gray-300 p-2'>{item.category_name}</td>
                 <td className='border border-gray-300 p-2'>{item.inventory_quantity}</td>
               </tr>

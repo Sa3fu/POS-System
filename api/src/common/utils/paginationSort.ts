@@ -9,8 +9,8 @@ export interface SortParams {
 }
 
 export const getPaginationParams = (query: any): PaginationParams => {
-  const page = parseInt(query.page as string) || 1
-  const limit = parseInt(query.limit as string) || 15
+  const page = parseInt(query.page as string)
+  const limit = parseInt(query.limit as string)
   const offset = (page - 1) * limit
 
   return { page, limit, offset }

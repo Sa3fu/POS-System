@@ -16,6 +16,7 @@ export const detail = async (req: Request, res: Response) => {
         'inventory.id',
         'product.brand',
         'product.model',
+        'product.sku',
         'product.id',
         'inventory.quantity',
         'category.name',
